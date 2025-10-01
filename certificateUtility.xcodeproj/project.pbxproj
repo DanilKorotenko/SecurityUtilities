@@ -71,6 +71,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
+		DAC0EB242E8D8DB100A1F879 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		DAEBCAEB2C610F2F004B2265 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 12;
@@ -106,6 +115,7 @@
 		DA05624F2C6B74A20024083A /* SecurityUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecurityUtilities.h; sourceTree = "<group>"; };
 		DA0562502C6B74A20024083A /* SecurityUtilities.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = SecurityUtilities.mm; sourceTree = "<group>"; };
 		DA335F5C2C74C0DB004902CA /* lookupUser.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = lookupUser.sh; sourceTree = "<group>"; };
+		DAC0EB262E8D8DB100A1F879 /* codeSignUtility */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = codeSignUtility; sourceTree = BUILT_PRODUCTS_DIR; };
 		DACA46E42C637AF80005B1EB /* createTrustAdminUser.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = createTrustAdminUser.sh; sourceTree = "<group>"; };
 		DACA46E52C637AF80005B1EB /* deleteTrustAdminUser.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = deleteTrustAdminUser.sh; sourceTree = "<group>"; };
 		DACA46E82C64BE5B0005B1EB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -119,6 +129,7 @@
 		DA013B322C9ADFE6001BB16E /* certificateUtilityApp */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = certificateUtilityApp; sourceTree = "<group>"; };
 		DA0562252C6A12820024083A /* keychainInfo */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = keychainInfo; sourceTree = "<group>"; };
 		DAA2BF952C91E1660011280E /* IUIdentityQuery */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = IUIdentityQuery; sourceTree = "<group>"; };
+		DAC0EB272E8D8DB200A1F879 /* codeSignUtility */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = codeSignUtility; sourceTree = "<group>"; };
 		DAEC60CF2C774F85006743EB /* certificateTool */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = certificateTool; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
@@ -131,6 +142,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		DA0562212C6A12820024083A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DAC0EB232E8D8DB100A1F879 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -212,6 +230,7 @@
 				DA0562252C6A12820024083A /* keychainInfo */,
 				DAEC60CF2C774F85006743EB /* certificateTool */,
 				DA013B322C9ADFE6001BB16E /* certificateUtilityApp */,
+				DAC0EB272E8D8DB200A1F879 /* codeSignUtility */,
 				DAEBCAEE2C610F2F004B2265 /* Products */,
 				DACA46E82C64BE5B0005B1EB /* README.md */,
 				DA05620D2C69DE490024083A /* SecurityUtilities */,
@@ -226,6 +245,7 @@
 				DA0562242C6A12820024083A /* keychainInfo */,
 				DAEC60CE2C774F85006743EB /* certificateTool.app */,
 				DA013B312C9ADFE6001BB16E /* certificateUtilityApp.app */,
+				DAC0EB262E8D8DB100A1F879 /* codeSignUtility */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -275,6 +295,28 @@
 			);
 			productName = keychainInfo;
 			productReference = DA0562242C6A12820024083A /* keychainInfo */;
+			productType = "com.apple.product-type.tool";
+		};
+		DAC0EB252E8D8DB100A1F879 /* codeSignUtility */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DAC0EB2C2E8D8DB200A1F879 /* Build configuration list for PBXNativeTarget "codeSignUtility" */;
+			buildPhases = (
+				DAC0EB222E8D8DB100A1F879 /* Sources */,
+				DAC0EB232E8D8DB100A1F879 /* Frameworks */,
+				DAC0EB242E8D8DB100A1F879 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				DAC0EB272E8D8DB200A1F879 /* codeSignUtility */,
+			);
+			name = codeSignUtility;
+			packageProductDependencies = (
+			);
+			productName = codeSignUtility;
+			productReference = DAC0EB262E8D8DB100A1F879 /* codeSignUtility */;
 			productType = "com.apple.product-type.tool";
 		};
 		DAEBCAEC2C610F2F004B2265 /* certificateUtility */ = {
@@ -339,6 +381,9 @@
 					DA05622C2C6A14A90024083A = {
 						CreatedOnToolsVersion = 16.0;
 					};
+					DAC0EB252E8D8DB100A1F879 = {
+						CreatedOnToolsVersion = 26.0;
+					};
 					DAEBCAEC2C610F2F004B2265 = {
 						CreatedOnToolsVersion = 16.0;
 					};
@@ -365,6 +410,7 @@
 				DA05622C2C6A14A90024083A /* BuildAll */,
 				DAEC60CD2C774F85006743EB /* certificateTool */,
 				DA013B302C9ADFE6001BB16E /* certificateUtilityApp */,
+				DAC0EB252E8D8DB100A1F879 /* codeSignUtility */,
 			);
 		};
 /* End PBXProject section */
@@ -405,6 +451,13 @@
 				DA05623C2C6A2B230024083A /* NSData+HexString.m in Sources */,
 				DA05623D2C6A2B230024083A /* NSData+SHA1.m in Sources */,
 				DA05622B2C6A14940024083A /* SUCeritifcate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DAC0EB222E8D8DB100A1F879 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -529,6 +582,24 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		DAC0EB2A2E8D8DB200A1F879 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				MACOSX_DEPLOYMENT_TARGET = 15.6;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		DAC0EB2B2E8D8DB200A1F879 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				MACOSX_DEPLOYMENT_TARGET = 15.6;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -742,6 +813,15 @@
 			buildConfigurations = (
 				DA05622E2C6A14A90024083A /* Debug */,
 				DA05622F2C6A14A90024083A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DAC0EB2C2E8D8DB200A1F879 /* Build configuration list for PBXNativeTarget "codeSignUtility" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DAC0EB2A2E8D8DB200A1F879 /* Debug */,
+				DAC0EB2B2E8D8DB200A1F879 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
