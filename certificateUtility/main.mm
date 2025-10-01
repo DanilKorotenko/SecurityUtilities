@@ -70,7 +70,7 @@ int main(int argc, const char * argv[])
             return 0;
         }
 
-        SUKeychain *keychain = [[SUKeychain alloc] initSystemKeychain];
+        SUKeychain *keychain = [SUKeychain systemKeychain];
         if (!keychain)
         {
             NSLog(@"No keychain");

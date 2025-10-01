@@ -112,8 +112,8 @@
 		DA0562492C6B70670024083A /* IUIdentity.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IUIdentity.m; sourceTree = "<group>"; };
 		DA05624A2C6B70670024083A /* IUIdentityAdapter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IUIdentityAdapter.h; sourceTree = "<group>"; };
 		DA05624B2C6B70670024083A /* IUIdentityAdapter.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = IUIdentityAdapter.mm; sourceTree = "<group>"; };
-		DA05624F2C6B74A20024083A /* SecurityUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecurityUtilities.h; sourceTree = "<group>"; };
-		DA0562502C6B74A20024083A /* SecurityUtilities.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = SecurityUtilities.mm; sourceTree = "<group>"; };
+		DA05624F2C6B74A20024083A /* CertificateUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CertificateUtilities.h; sourceTree = "<group>"; };
+		DA0562502C6B74A20024083A /* CertificateUtilities.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CertificateUtilities.mm; sourceTree = "<group>"; };
 		DA335F5C2C74C0DB004902CA /* lookupUser.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = lookupUser.sh; sourceTree = "<group>"; };
 		DAC0EB262E8D8DB100A1F879 /* codeSignUtility */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = codeSignUtility; sourceTree = BUILT_PRODUCTS_DIR; };
 		DACA46E42C637AF80005B1EB /* createTrustAdminUser.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = createTrustAdminUser.sh; sourceTree = "<group>"; };
@@ -179,8 +179,8 @@
 				DA0562372C6A2B230024083A /* NSData+HexString.m */,
 				DA0562382C6A2B230024083A /* NSData+SHA1.h */,
 				DA0562392C6A2B230024083A /* NSData+SHA1.m */,
-				DA05624F2C6B74A20024083A /* SecurityUtilities.h */,
-				DA0562502C6B74A20024083A /* SecurityUtilities.mm */,
+				DA05624F2C6B74A20024083A /* CertificateUtilities.h */,
+				DA0562502C6B74A20024083A /* CertificateUtilities.mm */,
 				DA05620F2C69DF000024083A /* SUCeritifcate.h */,
 				DA0562102C69DF000024083A /* SUCeritifcate.m */,
 				DA0562122C69EB190024083A /* SUKeychain.h */,
