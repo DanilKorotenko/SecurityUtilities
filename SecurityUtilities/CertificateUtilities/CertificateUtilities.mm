@@ -13,7 +13,7 @@
 // *==================================================================
 //
 
-//#import "SecurityUtilities.h"
+#import "CertificateUtilities.h"
 
 #import <Foundation/Foundation.h>
 
@@ -24,201 +24,195 @@
 
 #include <vector>
 
-bool areCertificatesInSystemKeychain(const std::string &aDerFolder, std::string &errorDescription)
+bool isCertificateInSystemKeychain(const std::string &aDerPath, std::string &errorDescription)
 {
-    NSString *derFolderPath = [NSString stringWithUTF8String:aDerFolder.c_str()];
-    NSURL *derFolderURL = [NSURL fileURLWithPath:derFolderPath];
-    NSError *error = nil;
-    NSArray *fileURLs = [[NSFileManager defaultManager] contentsOfDirectoryAtURL:derFolderURL
-        includingPropertiesForKeys:@[NSURLIsRegularFileKey] options:0 error:&error];
-
-    if (fileURLs.count == 0)
+    @autoreleasepool
     {
-        errorDescription = "No certificates found.";
-        return false;
-    }
-
-    SUKeychain *keychain = [SUKeychain systemKeychain];
-    if (!keychain)
-    {
-        errorDescription = "No keychain";
-        return false;
-    }
-
-    NSString *internalErrorDescription = nil;
-
-    for (NSURL *fileURL in fileURLs)
-    {
-        SUCeritifcate *certificate = [[SUCeritifcate alloc] initWithPath:fileURL.path];
-        if (!certificate)
+        NSString *derPath = [NSString stringWithUTF8String:aDerPath.c_str()];
+        if (!derPath)
         {
-            internalErrorDescription = [NSString stringWithFormat:
-                @"Cannot read certificate: %@", fileURL.path];
-            break;
+            errorDescription = "isCertificateInSystemKeychain: No path";
+            return false;
         }
 
-        if (![keychain containsCertificate:certificate])
+        SUKeychain *keychain = [SUKeychain systemKeychain];
+        if (!keychain)
         {
-            internalErrorDescription = [NSString stringWithFormat:
-                @"Certificate not in system keychain: %@", certificate.name];
-            break;
-        }
-    }
-
-    if (internalErrorDescription)
-    {
-        errorDescription = std::string([internalErrorDescription UTF8String]);
-    }
-    return internalErrorDescription == nil;
-}
-
-bool areCertificatesInSystemKeychainAndAdminTrusted(const std::vector<std::string> &aHashes,
-    std::string &errorDescription)
-{
-    NSString *internalErrorDescription = nil;
-
-    SUKeychain *systemKeychain = [SUKeychain systemKeychain];
-
-    for (std::string sha1Item: aHashes)
-    {
-        NSString *sha1 = [[NSString alloc] initWithUTF8String:sha1Item.c_str()];
-        SUCeritifcate *certificate = [systemKeychain findCertificateBySHA1:sha1];
-        if (!certificate)
-        {
-            internalErrorDescription = [NSString stringWithFormat:@"Certificate not found: %@", sha1];
-            break;
+            errorDescription = "No system keychain";
+            return false;
         }
 
-        if (!certificate.isAdminTrusted)
+        NSString *internalErrorDescription = nil;
+
+        do
         {
-            internalErrorDescription = [NSString stringWithFormat:@"certificate not admin trusted: %@",
-                certificate.name];
-            break;
-        }
-    }
-
-    if (internalErrorDescription)
-    {
-        errorDescription = std::string([internalErrorDescription UTF8String]);
-    }
-    return internalErrorDescription == nil;
-
-}
-
-bool addCertificatesToCommonKeychain(const std::string &aDerFolder, std::string &errorDescription)
-{
-    NSString *derFolderPath = [NSString stringWithUTF8String:aDerFolder.c_str()];
-    NSURL *derFolderURL = [NSURL fileURLWithPath:derFolderPath];
-    NSError *error = nil;
-    NSArray *fileURLs = [[NSFileManager defaultManager] contentsOfDirectoryAtURL:derFolderURL
-        includingPropertiesForKeys:@[NSURLIsRegularFileKey] options:0 error:&error];
-
-    if (fileURLs.count == 0)
-    {
-        errorDescription = "No certificates found.";
-        return false;
-    }
-
-    SUKeychain *keychain = [SUKeychain commonKeychain];
-    if (!keychain)
-    {
-        errorDescription = "No common keychain";
-        return false;
-    }
-
-    NSString *internalErrorDescription = nil;
-
-    for (NSURL *fileURL in fileURLs)
-    {
-        SUCeritifcate *certificate = [[SUCeritifcate alloc] initWithPath:fileURL.path];
-        if (!certificate)
-        {
-            internalErrorDescription = [NSString stringWithFormat:
-                @"Cannot read certificate: %@", fileURL.path];
-            break;
-        }
-
-        OSStatus err = noErr;
-
-        if (![keychain containsCertificate:certificate])
-        {
-            err = [keychain addCertificate:certificate];
-            if (err != noErr)
+            SUCeritifcate *certificate = [[SUCeritifcate alloc] initWithPath:derPath];
+            if (!certificate)
             {
                 internalErrorDescription = [NSString stringWithFormat:
-                    @"Add certificate To common Keychain failure. Error: %d", err];
+                    @"Cannot read certificate: %@", derPath];
+                break;
+            }
+
+            if (![keychain containsCertificate:certificate])
+            {
+                internalErrorDescription = [NSString stringWithFormat:
+                    @"Certificate not in system keychain: %@", certificate.name];
                 break;
             }
         }
-    }
+        while (false);
 
-    if (internalErrorDescription)
-    {
-        errorDescription = std::string([internalErrorDescription UTF8String]);
+        if (internalErrorDescription)
+        {
+            errorDescription = std::string([internalErrorDescription UTF8String]);
+        }
+        return internalErrorDescription == nil;
     }
-    return internalErrorDescription == nil;
+}
+
+bool isCertificateInSystemKeychainAndAdminTrusted(const std::string &aHash, std::string &errorDescription)
+{
+    @autoreleasepool
+    {
+        NSString *internalErrorDescription = nil;
+
+        SUKeychain *systemKeychain = [SUKeychain systemKeychain];
+
+        do
+        {
+            NSString *sha1 = [[NSString alloc] initWithUTF8String:aHash.c_str()];
+            SUCeritifcate *certificate = [systemKeychain findCertificateBySHA1:sha1];
+            if (!certificate)
+            {
+                internalErrorDescription = [NSString stringWithFormat:@"Certificate not found: %@", sha1];
+                break;
+            }
+
+            if (!certificate.isAdminTrusted)
+            {
+                internalErrorDescription = [NSString stringWithFormat:@"certificate not admin trusted: %@",
+                    certificate.name];
+                break;
+            }
+        } while (false);
+
+        if (internalErrorDescription)
+        {
+            errorDescription = std::string([internalErrorDescription UTF8String]);
+        }
+        return internalErrorDescription == nil;
+    }
+}
+
+bool addCertificateToCommonKeychain(const std::string &aDerPath, std::string &errorDescription)
+{
+    @autoreleasepool
+    {
+        NSString *derPath = [NSString stringWithUTF8String:aDerPath.c_str()];
+        if (!derPath)
+        {
+            errorDescription = "isCertificateInSystemKeychain: No path";
+            return false;
+        }
+
+        SUKeychain *keychain = [SUKeychain commonKeychain];
+        if (!keychain)
+        {
+            errorDescription = "No common keychain";
+            return false;
+        }
+
+        NSString *internalErrorDescription = nil;
+
+        do
+        {
+            SUCeritifcate *certificate = [[SUCeritifcate alloc] initWithPath:derPath];
+            if (!certificate)
+            {
+                internalErrorDescription = [NSString stringWithFormat:
+                    @"Cannot read certificate: %@", derPath];
+                break;
+            }
+
+            OSStatus err = noErr;
+            if (![keychain containsCertificate:certificate])
+            {
+                err = [keychain addCertificate:certificate];
+                if (err != noErr)
+                {
+                    internalErrorDescription = [NSString stringWithFormat:
+                        @"Add certificate To common Keychain failure. Error: %d", err];
+                    break;
+                }
+            }
+        }
+        while (false);
+
+        if (internalErrorDescription)
+        {
+            errorDescription = std::string([internalErrorDescription UTF8String]);
+        }
+        return internalErrorDescription == nil;
+    }
 }
 
 // certificate must be already in keychain
 bool checkCertificates(const std::vector<std::string> &aHashes, std::string &errorDescription)
 {
-    NSString *internalErrorDescription = nil;
-
-    SUKeychain *commonKeychain = [SUKeychain commonKeychain];
-
-    for (std::string sha1Item: aHashes)
+    @autoreleasepool
     {
-        NSString *sha1 = [[NSString alloc] initWithUTF8String:sha1Item.c_str()];
-        SUCeritifcate *certificate = [commonKeychain findCertificateBySHA1:sha1];
-        if (!certificate)
-        {
-            internalErrorDescription = [NSString stringWithFormat:@"Certificate not found: %@", sha1];
-            break;
-        }
+        NSString *internalErrorDescription = nil;
 
-        if (!certificate.isAnyTrusted)
+        NSMutableArray *hashes = [NSMutableArray array];
+        for (std::string sha1Item: aHashes)
         {
-            OSStatus status = [certificate installTrustSettingsForUser];
-            if (status != noErr)
+            NSString *sha1 = [[NSString alloc] initWithUTF8String:sha1Item.c_str()];
+            if (sha1)
             {
-                internalErrorDescription = [NSString stringWithFormat:@"Error on install trust settings: %d", status];
-                break;
+                [hashes addObject:sha1];
             }
         }
-    }
 
-    if (internalErrorDescription)
-    {
-        errorDescription = std::string([internalErrorDescription UTF8String]);
+        SUKeychain *commonKeychain = [SUKeychain commonKeychain];
+        [commonKeychain checkCertificates:hashes  errorDescription:&internalErrorDescription];
+
+        if (internalErrorDescription)
+        {
+            errorDescription = std::string([internalErrorDescription UTF8String]);
+        }
+        return internalErrorDescription == nil;
     }
-    return internalErrorDescription == nil;
 }
 
 // certificate must be already in keychain
 bool deleteCertificates(const std::vector<std::string> &aHashes, std::string &errorDescription)
 {
-    NSString *internalErrorDescription = nil;
-
-    SUKeychain *commonKeychain = [SUKeychain commonKeychain];
-
-    for (std::string sha1Item: aHashes)
+    @autoreleasepool
     {
-        NSString *sha1 = [[NSString alloc] initWithUTF8String:sha1Item.c_str()];
-        SUCeritifcate *certificate = [commonKeychain findCertificateBySHA1:sha1];
-        if (certificate)
+        NSString *internalErrorDescription = nil;
+
+        SUKeychain *commonKeychain = [SUKeychain commonKeychain];
+
+        for (std::string sha1Item: aHashes)
         {
-            OSStatus status = [SUKeychain deleteCertificate:certificate];
-            if (status != noErr)
+            NSString *sha1 = [[NSString alloc] initWithUTF8String:sha1Item.c_str()];
+            SUCeritifcate *certificate = [commonKeychain findCertificateBySHA1:sha1];
+            if (certificate)
             {
-                internalErrorDescription = [NSString stringWithFormat:@"Error on delete certificate: %d", status];
-                break;
+                OSStatus status = [SUKeychain deleteCertificate:certificate];
+                if (status != noErr)
+                {
+                    internalErrorDescription = [NSString stringWithFormat:@"Error on delete certificate: %d", status];
+                    break;
+                }
             }
         }
-    }
 
-    if (internalErrorDescription)
-    {
-        errorDescription = std::string([internalErrorDescription UTF8String]);
+        if (internalErrorDescription)
+        {
+            errorDescription = std::string([internalErrorDescription UTF8String]);
+        }
+        return internalErrorDescription == nil;
     }
-    return internalErrorDescription == nil;
 }

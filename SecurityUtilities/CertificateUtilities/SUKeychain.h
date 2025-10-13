@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (SUCeritifcate *)findCertificateBySHA1:(NSString *)aSHA1;
 
 - (OSStatus)addCertificate:(SUCeritifcate *)aCertificate;
+- (void)checkCertificates:(NSArray *)certsHashes errorDescription:(NSString **)errorDescription;
 
 @end
 

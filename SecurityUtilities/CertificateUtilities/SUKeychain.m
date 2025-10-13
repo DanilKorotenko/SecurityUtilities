@@ -9,7 +9,8 @@
 
 @interface SUKeychain ()
 
-@property (readwrite) SecKeychainRef keychain;
+@property (readwrite)   SecKeychainRef keychain;
+@property (strong)      NSMutableDictionary *trustedCache;
 
 @end
 
@@ -17,17 +18,35 @@
 
 + (SUKeychain *)systemKeychain
 {
-    return [[SUKeychain alloc] initWithDomain:kSecPreferencesDomainSystem];
+    static SUKeychain *systemKeychain = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken,
+    ^{
+        systemKeychain = [[SUKeychain alloc] initWithDomain:kSecPreferencesDomainSystem];
+    });
+    return systemKeychain;
 }
 
 + (SUKeychain *)loginKeychain
 {
-    return [[SUKeychain alloc] initWithDomain:kSecPreferencesDomainUser];
+    static SUKeychain *loginKeychain = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken,
+    ^{
+        loginKeychain = [[SUKeychain alloc] initWithDomain:kSecPreferencesDomainUser];
+    });
+    return loginKeychain;
 }
 
 + (SUKeychain *)commonKeychain
 {
-    return [[SUKeychain alloc] initWithDomain:kSecPreferencesDomainCommon];
+    static SUKeychain *commonKeychain = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken,
+    ^{
+        commonKeychain = [[SUKeychain alloc] initWithDomain:kSecPreferencesDomainCommon];
+    });
+    return commonKeychain;
 }
 
 + (OSStatus)deleteCertificate:(SUCeritifcate *)aCertificate
@@ -48,6 +67,7 @@
             return nil;
         }
 
+        self.trustedCache = [NSMutableDictionary dictionary];
         self.keychain = keychain;
     }
     return self;
@@ -80,8 +100,10 @@
         if (CFEqual(aCertificate.certificateRef, (SecCertificateRef)candidate))
         {
             result = YES;
+            CFRelease(candidate);
             break;
         }
+        CFRelease(candidate);
     }
 
     CFRelease(searchRef);
@@ -93,8 +115,12 @@
 {
     SecKeychainSearchRef searchRef = NULL;
     OSStatus status = SecKeychainSearchCreateFromAttributes(self.keychain, kSecCertificateItemClass, NULL, &searchRef);
-    if (status || !searchRef)
+    if (status)
     {
+        if (searchRef)
+        {
+            CFRelease(searchRef);
+        }
         return nil;
     }
 
@@ -107,8 +133,10 @@
         if ([certificate.sha1 caseInsensitiveCompare:aSHA1] == NSOrderedSame)
         {
             result = certificate;
+            CFRelease(candidate);
             break;
         }
+        CFRelease(candidate);
     }
 
     CFRelease(searchRef);
@@ -119,6 +147,48 @@
 - (OSStatus)addCertificate:(SUCeritifcate *)aCertificate
 {
     return SecCertificateAddToKeychain(aCertificate.certificateRef, self.keychain);
+}
+
+- (void)checkCertificates:(NSArray *)certsHashes errorDescription:(NSString **)errorDescription
+{
+    @synchronized (self.trustedCache)
+    {
+        for (NSString *certSHA1 in certsHashes)
+        {
+            NSNumber *trust = [self.trustedCache objectForKey:certSHA1];
+            if (trust && [trust boolValue])
+            {
+                continue;
+            }
+            else
+            {
+                SUCeritifcate *certificate = [self findCertificateBySHA1:certSHA1];
+                if (!certificate)
+                {
+                    *errorDescription = [NSString stringWithFormat:@"Certificate not found: %@", certSHA1];
+                    break;
+                }
+
+                if (!certificate.isAnyTrusted)
+                {
+                    OSStatus status = [certificate installTrustSettingsForUser];
+                    if (status != noErr)
+                    {
+                        *errorDescription = [NSString stringWithFormat:@"Error on install trust settings: %d", status];
+                        break;
+                    }
+                    else
+                    {
+                        [self.trustedCache setObject:[NSNumber numberWithBool:YES] forKey:certSHA1];
+                    }
+                }
+                else
+                {
+                    [self.trustedCache setObject:[NSNumber numberWithBool:YES] forKey:certSHA1];
+                }
+            }
+        }
+    }
 }
 
 @end

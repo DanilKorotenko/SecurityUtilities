@@ -47,14 +47,12 @@
 
         CFDataRef certDataRef = (__bridge CFDataRef)(certData);
 
-        SecCertificateRef result = SecCertificateCreateWithData(kCFAllocatorDefault, certDataRef);
+        self.certificateRef = SecCertificateCreateWithData(kCFAllocatorDefault, certDataRef);
 
-        if (!result)
+        if (!self.certificateRef)
         {
             return nil;
         }
-
-        self.certificateRef = result;
     }
     return self;
 }
