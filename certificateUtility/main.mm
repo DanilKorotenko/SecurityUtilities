@@ -6,8 +6,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "../SecurityUtilities/SUCeritifcate.h"
-#import "../SecurityUtilities/SUKeychain.h"
+#import "../SecurityUtilities/CertificateUtilities/SUCeritifcate.h"
+#import "../SecurityUtilities/CertificateUtilities/SUKeychain.h"
 #import "../AuthorizationUtilities/AUAuthorization.h"
 #import "../IdentityUtilities/IUIdentity.h"
 #import "../IdentityUtilities/IUIdentityQuery/IUIdentityQuery.h"

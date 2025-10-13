@@ -13,6 +13,7 @@
 			buildPhases = (
 			);
 			dependencies = (
+				DAC0EB452E9D5C2400A1F879 /* PBXTargetDependency */,
 				DA0562312C6A14B10024083A /* PBXTargetDependency */,
 				DA0562332C6A14B10024083A /* PBXTargetDependency */,
 			);
@@ -38,6 +39,10 @@
 		DA05623D2C6A2B230024083A /* NSData+SHA1.m in Sources */ = {isa = PBXBuildFile; fileRef = DA0562392C6A2B230024083A /* NSData+SHA1.m */; };
 		DA0562522C6B764D0024083A /* IUIdentity.m in Sources */ = {isa = PBXBuildFile; fileRef = DA0562492C6B70670024083A /* IUIdentity.m */; };
 		DA76BEC52C74C8D0004946A9 /* lookupUser.sh in CopyFiles */ = {isa = PBXBuildFile; fileRef = DA335F5C2C74C0DB004902CA /* lookupUser.sh */; };
+		DAC0EB352E96D69300A1F879 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC0EB342E96D69300A1F879 /* Security.framework */; };
+		DAC0EB3D2E9D48FD00A1F879 /* CodeSignInfo.mm in Sources */ = {isa = PBXBuildFile; fileRef = DAC0EB382E98262C00A1F879 /* CodeSignInfo.mm */; };
+		DAC0EB422E9D4A3B00A1F879 /* SUCodeSignInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = DAC0EB412E9D4A3B00A1F879 /* SUCodeSignInfo.m */; };
+		DAC0EB432E9D4A3B00A1F879 /* SUCodeSignInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = DAC0EB412E9D4A3B00A1F879 /* SUCodeSignInfo.m */; };
 		DACA46E62C637DDF0005B1EB /* createTrustAdminUser.sh in CopyFiles */ = {isa = PBXBuildFile; fileRef = DACA46E42C637AF80005B1EB /* createTrustAdminUser.sh */; };
 		DACA46E72C637DDF0005B1EB /* deleteTrustAdminUser.sh in CopyFiles */ = {isa = PBXBuildFile; fileRef = DACA46E52C637AF80005B1EB /* deleteTrustAdminUser.sh */; };
 		DAEB691B2C62448A004B2265 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = DAEB69192C62448A004B2265 /* main.mm */; };
@@ -58,6 +63,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = DA0562232C6A12820024083A;
 			remoteInfo = keychainInfo;
+		};
+		DAC0EB442E9D5C2400A1F879 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DAEBCAE52C610F2F004B2265 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DAC0EB252E8D8DB100A1F879;
+			remoteInfo = codeSignUtility;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -116,6 +128,11 @@
 		DA0562502C6B74A20024083A /* CertificateUtilities.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CertificateUtilities.mm; sourceTree = "<group>"; };
 		DA335F5C2C74C0DB004902CA /* lookupUser.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = lookupUser.sh; sourceTree = "<group>"; };
 		DAC0EB262E8D8DB100A1F879 /* codeSignUtility */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = codeSignUtility; sourceTree = BUILT_PRODUCTS_DIR; };
+		DAC0EB342E96D69300A1F879 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		DAC0EB382E98262C00A1F879 /* CodeSignInfo.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CodeSignInfo.mm; sourceTree = "<group>"; };
+		DAC0EB3C2E98266100A1F879 /* CodeSignInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CodeSignInfo.h; sourceTree = "<group>"; };
+		DAC0EB402E9D4A3B00A1F879 /* SUCodeSignInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SUCodeSignInfo.h; sourceTree = "<group>"; };
+		DAC0EB412E9D4A3B00A1F879 /* SUCodeSignInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SUCodeSignInfo.m; sourceTree = "<group>"; };
 		DACA46E42C637AF80005B1EB /* createTrustAdminUser.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = createTrustAdminUser.sh; sourceTree = "<group>"; };
 		DACA46E52C637AF80005B1EB /* deleteTrustAdminUser.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = deleteTrustAdminUser.sh; sourceTree = "<group>"; };
 		DACA46E82C64BE5B0005B1EB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -152,6 +169,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAC0EB352E96D69300A1F879 /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -175,16 +193,8 @@
 		DA05620D2C69DE490024083A /* SecurityUtilities */ = {
 			isa = PBXGroup;
 			children = (
-				DA0562362C6A2B230024083A /* NSData+HexString.h */,
-				DA0562372C6A2B230024083A /* NSData+HexString.m */,
-				DA0562382C6A2B230024083A /* NSData+SHA1.h */,
-				DA0562392C6A2B230024083A /* NSData+SHA1.m */,
-				DA05624F2C6B74A20024083A /* CertificateUtilities.h */,
-				DA0562502C6B74A20024083A /* CertificateUtilities.mm */,
-				DA05620F2C69DF000024083A /* SUCeritifcate.h */,
-				DA0562102C69DF000024083A /* SUCeritifcate.m */,
-				DA0562122C69EB190024083A /* SUKeychain.h */,
-				DA0562132C69EB190024083A /* SUKeychain.m */,
+				DAC0EB3F2E9D49D000A1F879 /* CodeSignInfo */,
+				DAC0EB3E2E9D49B200A1F879 /* CertificateUtilities */,
 			);
 			path = SecurityUtilities;
 			sourceTree = "<group>";
@@ -208,6 +218,42 @@
 				DA05624B2C6B70670024083A /* IUIdentityAdapter.mm */,
 			);
 			path = IdentityUtilities;
+			sourceTree = "<group>";
+		};
+		DAC0EB332E96D69200A1F879 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DAC0EB342E96D69300A1F879 /* Security.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DAC0EB3E2E9D49B200A1F879 /* CertificateUtilities */ = {
+			isa = PBXGroup;
+			children = (
+				DA05624F2C6B74A20024083A /* CertificateUtilities.h */,
+				DA0562502C6B74A20024083A /* CertificateUtilities.mm */,
+				DA0562362C6A2B230024083A /* NSData+HexString.h */,
+				DA0562372C6A2B230024083A /* NSData+HexString.m */,
+				DA0562382C6A2B230024083A /* NSData+SHA1.h */,
+				DA0562392C6A2B230024083A /* NSData+SHA1.m */,
+				DA05620F2C69DF000024083A /* SUCeritifcate.h */,
+				DA0562102C69DF000024083A /* SUCeritifcate.m */,
+				DA0562122C69EB190024083A /* SUKeychain.h */,
+				DA0562132C69EB190024083A /* SUKeychain.m */,
+			);
+			path = CertificateUtilities;
+			sourceTree = "<group>";
+		};
+		DAC0EB3F2E9D49D000A1F879 /* CodeSignInfo */ = {
+			isa = PBXGroup;
+			children = (
+				DAC0EB382E98262C00A1F879 /* CodeSignInfo.mm */,
+				DAC0EB3C2E98266100A1F879 /* CodeSignInfo.h */,
+				DAC0EB402E9D4A3B00A1F879 /* SUCodeSignInfo.h */,
+				DAC0EB412E9D4A3B00A1F879 /* SUCodeSignInfo.m */,
+			);
+			path = CodeSignInfo;
 			sourceTree = "<group>";
 		};
 		DAEB691A2C62448A004B2265 /* certificateUtility */ = {
@@ -235,6 +281,7 @@
 				DACA46E82C64BE5B0005B1EB /* README.md */,
 				DA05620D2C69DE490024083A /* SecurityUtilities */,
 				DAEB691C2C624760004B2265 /* testCertificate.der */,
+				DAC0EB332E96D69200A1F879 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -458,6 +505,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAC0EB3D2E9D48FD00A1F879 /* CodeSignInfo.mm in Sources */,
+				DAC0EB422E9D4A3B00A1F879 /* SUCodeSignInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -470,6 +519,7 @@
 				DA05623B2C6A2B230024083A /* NSData+SHA1.m in Sources */,
 				DA0562142C69EB190024083A /* SUKeychain.m in Sources */,
 				DA0562112C69DF000024083A /* SUCeritifcate.m in Sources */,
+				DAC0EB432E9D4A3B00A1F879 /* SUCodeSignInfo.m in Sources */,
 				DA0562172C69F3670024083A /* AUAuthorization.mm in Sources */,
 				DA0562522C6B764D0024083A /* IUIdentity.m in Sources */,
 			);
@@ -494,6 +544,11 @@
 			isa = PBXTargetDependency;
 			target = DA0562232C6A12820024083A /* keychainInfo */;
 			targetProxy = DA0562322C6A14B10024083A /* PBXContainerItemProxy */;
+		};
+		DAC0EB452E9D5C2400A1F879 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DAC0EB252E8D8DB100A1F879 /* codeSignUtility */;
+			targetProxy = DAC0EB442E9D5C2400A1F879 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
