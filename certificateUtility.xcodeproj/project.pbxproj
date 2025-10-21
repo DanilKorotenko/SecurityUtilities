@@ -42,7 +42,6 @@
 		DAC0EB352E96D69300A1F879 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAC0EB342E96D69300A1F879 /* Security.framework */; };
 		DAC0EB3D2E9D48FD00A1F879 /* CodeSignInfo.mm in Sources */ = {isa = PBXBuildFile; fileRef = DAC0EB382E98262C00A1F879 /* CodeSignInfo.mm */; };
 		DAC0EB422E9D4A3B00A1F879 /* SUCodeSignInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = DAC0EB412E9D4A3B00A1F879 /* SUCodeSignInfo.m */; };
-		DAC0EB432E9D4A3B00A1F879 /* SUCodeSignInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = DAC0EB412E9D4A3B00A1F879 /* SUCodeSignInfo.m */; };
 		DACA46E62C637DDF0005B1EB /* createTrustAdminUser.sh in CopyFiles */ = {isa = PBXBuildFile; fileRef = DACA46E42C637AF80005B1EB /* createTrustAdminUser.sh */; };
 		DACA46E72C637DDF0005B1EB /* deleteTrustAdminUser.sh in CopyFiles */ = {isa = PBXBuildFile; fileRef = DACA46E52C637AF80005B1EB /* deleteTrustAdminUser.sh */; };
 		DAEB691B2C62448A004B2265 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = DAEB69192C62448A004B2265 /* main.mm */; };
@@ -519,7 +518,6 @@
 				DA05623B2C6A2B230024083A /* NSData+SHA1.m in Sources */,
 				DA0562142C69EB190024083A /* SUKeychain.m in Sources */,
 				DA0562112C69DF000024083A /* SUCeritifcate.m in Sources */,
-				DAC0EB432E9D4A3B00A1F879 /* SUCodeSignInfo.m in Sources */,
 				DA0562172C69F3670024083A /* AUAuthorization.mm in Sources */,
 				DA0562522C6B764D0024083A /* IUIdentity.m in Sources */,
 			);

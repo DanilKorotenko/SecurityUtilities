@@ -70,20 +70,47 @@
     return self;
 }
 
+- (instancetype)initWithPid:(int)aPid
+{
+    self = [super init];
+    if (self)
+    {
+        SecCodeRef code = NULL;
+        CFDictionaryRef signingInfo = NULL;
+
+        NSNumber *pidNumber = [NSNumber numberWithInt:aPid];
+        NSDictionary *attributes = @{ (__bridge id)kSecGuestAttributePid : pidNumber };
+
+        OSStatus status = SecCodeCopyGuestWithAttributes(NULL,
+            (__bridge CFDictionaryRef)attributes, kSecCSDefaultFlags, &code);
+
+        if (status == errSecSuccess && code != NULL)
+        {
+            if (SecCodeCopySigningInformation(code, kSecCSSigningInformation, &signingInfo) == errSecSuccess)
+            {
+                if (signingInfo != NULL)
+                {
+                    self.signingInfoDictionary = CFBridgingRelease(signingInfo);
+                }
+            }
+        }
+
+        if (code != NULL)
+        {
+            CFRelease(code);
+        }
+
+        if (self.signingInfoDictionary == nil)
+        {
+            return nil;
+        }
+    }
+    return self;
+}
+
 - (NSString *)identifier
 {
     return [self.signingInfoDictionary objectForKey:(NSString *)kSecCodeInfoIdentifier];
 }
 
 @end
-
-/*
-    do
-    {
-
-        CFStringRef cfTeamIdentifier = (CFStringRef)CFDictionaryGetValue(cfSigningInfo, kSecCodeInfoTeamIdentifier);
-//        NSString * teamIdentifier = [[[NSString alloc] initWithString: (NSString *)cfTeamIdentifier] autorelease];
-
-    } while (false);
-
-*/

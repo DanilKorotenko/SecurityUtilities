@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface SUCodeSignInfo : NSObject
 
 - (instancetype)initWithBinaryPath:(NSString *)aPath;
+- (instancetype)initWithPid:(int)aPid;
 
 @property(readonly) NSString *identifier;
 

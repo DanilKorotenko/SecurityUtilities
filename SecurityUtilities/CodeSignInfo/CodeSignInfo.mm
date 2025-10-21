@@ -28,6 +28,18 @@ CodeSignInfoRef CodeSignInfoCreateWithBinaryPath(const char *aBinaryPath)
     return result;
 }
 
+CodeSignInfoRef CodeSignInfoCreateWithPid(int aPid)
+{
+    SUCodeSignInfo *codeSignInfo = [[SUCodeSignInfo alloc] initWithPid:aPid];
+
+    void *csi = (__bridge_retained void *)(codeSignInfo);
+
+    CodeSignInfoRef result = (CodeSignInfoRef)malloc(sizeof(CodeSignInfo));
+    result->_codeSignInfo = csi;
+
+    return result;
+}
+
 void CodeSignInfoReleaseAndMakeNull(CodeSignInfoRef *aCodeSignInfo)
 {
     SUCodeSignInfo *csi = (__bridge_transfer SUCodeSignInfo *) (*aCodeSignInfo)->_codeSignInfo;

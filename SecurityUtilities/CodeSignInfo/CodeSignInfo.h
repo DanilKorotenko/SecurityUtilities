@@ -19,6 +19,7 @@ typedef struct
 typedef CodeSignInfo* CodeSignInfoRef;
 
 CodeSignInfoRef CodeSignInfoCreateWithBinaryPath(const char *aBinaryPath);
+CodeSignInfoRef CodeSignInfoCreateWithPid(int aPid);
 
 void CodeSignInfoReleaseAndMakeNull(CodeSignInfoRef *aCodeSignInfo);
 
