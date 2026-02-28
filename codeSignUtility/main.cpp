@@ -37,6 +37,7 @@ int main(int argc, const char * argv[])
     }
 
     std::cout << CodeSignInfoGetIdentifier(codeSignInfo) << std::endl;
+    std::cout << CodeSignInfoGetCompanyName(codeSignInfo) << std::endl;
 
     CodeSignInfoReleaseAndMakeNull(&codeSignInfo);
     return EXIT_SUCCESS;

@@ -26,6 +26,7 @@ void CodeSignInfoReleaseAndMakeNull(CodeSignInfoRef *aCodeSignInfo);
 #pragma mark -
 
 const char *CodeSignInfoGetIdentifier(CodeSignInfoRef aCodeSignInfo);
+const char *CodeSignInfoGetCompanyName(CodeSignInfoRef aCodeSignInfo);
 
 #ifdef __cplusplus
   }

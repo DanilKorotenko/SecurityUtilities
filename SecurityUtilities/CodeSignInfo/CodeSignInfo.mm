@@ -60,3 +60,16 @@ const char *CodeSignInfoGetIdentifier(CodeSignInfoRef aCodeSignInfo)
 
     return result;
 }
+
+const char *CodeSignInfoGetCompanyName(CodeSignInfoRef aCodeSignInfo)
+{
+    const char *result = NULL;
+
+    @autoreleasepool
+    {
+        SUCodeSignInfo *codeSignInfo = (__bridge SUCodeSignInfo *)aCodeSignInfo->_codeSignInfo;
+        result = GetSafeUTF8String(codeSignInfo.companyName);
+    }
+
+    return result;
+}

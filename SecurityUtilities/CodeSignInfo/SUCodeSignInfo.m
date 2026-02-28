@@ -15,6 +15,8 @@
 
 @implementation SUCodeSignInfo
 
+@synthesize companyName;
+
 - (instancetype)initWithBinaryPath:(NSString *)aPath
 {
     self = [super init];
@@ -111,6 +113,51 @@
 - (NSString *)identifier
 {
     return [self.signingInfoDictionary objectForKey:(NSString *)kSecCodeInfoIdentifier];
+}
+
++ (NSString *)extractCompanyFromCommonName:(NSString *)aCommonName
+{
+    static NSString * const devID = @"Developer ID Application: ";
+    NSString *result = nil;
+
+    NSRange rangeDev = [aCommonName rangeOfString:devID];
+
+    if (rangeDev.location != NSNotFound)
+    {
+        NSRange rangeBr = [aCommonName rangeOfString:@")"];
+        NSUInteger loc = rangeDev.location + rangeDev.length;
+        NSUInteger len = (rangeBr.location + rangeBr.length) - devID.length;
+        result = [aCommonName substringWithRange:NSMakeRange(loc, len)];
+    }
+
+    return result;
+}
+
+- (NSString *)companyName
+{
+    if (nil == companyName)
+    {
+        CFArrayRef certificates = (CFArrayRef)CFBridgingRetain([self.signingInfoDictionary
+            objectForKey:(NSString *)kSecCodeInfoCertificates]);
+        CFIndex certificatesCount = CFArrayGetCount(certificates);
+        for (CFIndex i = 0; i < certificatesCount; i++)
+        {
+            SecCertificateRef certificate = (SecCertificateRef)CFArrayGetValueAtIndex(certificates, i);
+
+            CFStringRef commonNameRef = NULL;
+            SecCertificateCopyCommonName(certificate, &commonNameRef);
+            if (commonNameRef != NULL)
+            {
+                NSString *commonName = (NSString *)CFBridgingRelease(commonNameRef);
+                companyName = [[self class] extractCompanyFromCommonName:commonName];
+                if (companyName != nil)
+                {
+                    break;
+                }
+            }
+        }
+    }
+    return companyName;
 }
 
 @end

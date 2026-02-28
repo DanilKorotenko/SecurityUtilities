@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithPid:(int)aPid;
 
 @property(readonly) NSString *identifier;
+@property(readonly) NSString *companyName;
 
 @end
 
